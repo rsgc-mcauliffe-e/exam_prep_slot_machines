@@ -19,13 +19,17 @@ import Foundation
  Make use of your test plan and algorithm to ensure your code is complete.
  
  */
-var inputToProcess : String = ""
+var quarters = UInt()
+var machineOnePlaysSinceWin = -1
+var machineTwoPlaysSinceWin = -1
+var machineThreePlaysSinceWin = -1
+var totalPlayCount = UInt()
 
 // Loop until valid input is received
-while inputToProcess == "" {
+while quarters == 0 {
     
     // Show the prompt
-    print("Ask the question here? ", terminator: "")
+    print("How many quarters does Martha have in the jar?")
     
     // Get the user's input
     var input : String?
@@ -33,30 +37,138 @@ while inputToProcess == "" {
     
     // Use optional binding to see if the string can be unwrapped (to see if it is not nil)
     if let notNilInput = input {
-        
-        // You probably need to add additional checks to be sure the
-        // input received is valid
-        // Add checks as needed...
-        
-        // Save the input given, as we are certain it's what we are looking for now
-        inputToProcess = notNilInput
+		
+		if let isANumber = UInt(notNilInput){
+			if isANumber > 0 && isANumber < 1000 {
+				quarters = isANumber
+			}
+		}
         
     }
     
 }
-
+while machineOnePlaysSinceWin == -1 {
+	
+	// Show the prompt
+	print("How many times has the first machine been played since paying out?")
+	
+	// Get the user's input
+	var input : String?
+	input = readLine()
+	
+	// Use optional binding to see if the string can be unwrapped (to see if it is not nil)
+	if let notNilInput = input {
+		
+		if let isANumber = Int(notNilInput){
+			if isANumber >= 0 && isANumber <= 34  {
+				machineOnePlaysSinceWin = isANumber
+			}
+		}
+		
+	}
+	
+}
+while machineTwoPlaysSinceWin == -1 {
+	
+	// Show the prompt
+	print("How many times has the second machine been played since paying out?")
+	
+	// Get the user's input
+	var input : String?
+	input = readLine()
+	
+	// Use optional binding to see if the string can be unwrapped (to see if it is not nil)
+	if let notNilInput = input {
+		
+		if let isANumber = Int(notNilInput){
+			if isANumber >= 0 && isANumber <= 99  {
+				machineTwoPlaysSinceWin = isANumber
+			}
+		}
+		
+	}
+	
+}
+while machineThreePlaysSinceWin == -1 {
+	
+	// Show the prompt
+	print("How many times has the third machine been played since paying out?")
+	
+	// Get the user's input
+	var input : String?
+	input = readLine()
+	
+	// Use optional binding to see if the string can be unwrapped (to see if it is not nil)
+	if let notNilInput = input {
+		
+		if let isANumber = Int(notNilInput){
+			if isANumber >= 0 && isANumber <= 9  {
+				machineThreePlaysSinceWin = isANumber
+			}
+		}
+		
+	}
+	
+}
 /*
- 
+
  PROCESS
- 
+
  Here is where you implement the logic that solves the problem at hand.
  
  Make use of your test plan and algorithm to ensure your code is complete.
  
  */
-
 // Add 'process' code below....
-print("replace with process logic")
+
+func newPlay() {
+	quarters -= 1
+	totalPlayCount += 1
+}
+
+while (quarters > 0){
+	
+	//check before play one
+	if (quarters == 0) {
+		break
+	}
+	
+	//play one
+	machineOnePlaysSinceWin += 1
+	newPlay()
+	if (machineOnePlaysSinceWin == 35) {
+		quarters += 30
+		machineOnePlaysSinceWin = 0
+	}
+	
+	//check before play two
+	if (quarters == 0) {
+		break
+	}
+	
+	//play two
+	machineTwoPlaysSinceWin += 1
+	newPlay()
+	if (machineTwoPlaysSinceWin == 100){
+		quarters += 60
+		machineTwoPlaysSinceWin = 0
+	}
+	
+	//check before play three
+	if (quarters == 0) {
+		break
+	}
+	
+	//play three
+	machineThreePlaysSinceWin += 1
+	newPlay()
+	if (machineThreePlaysSinceWin == 10){
+		quarters += 9
+		machineThreePlaysSinceWin = 0
+	}
+	
+}
+
 
 
 /*
@@ -70,4 +182,4 @@ print("replace with process logic")
  */
 
 // Add 'output' code below... replace what is here as needed.
-print("The input given was: \(inputToProcess)")
+print("Martha plays \(totalPlayCount) times before going broke.")
